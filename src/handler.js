@@ -161,6 +161,7 @@ exports.mandrillHandler = (event, context, callback) => {
   console.log("1.1 - ", event);
   //   var email = event.email.toLowerCase();
   var email = "johnktransue@gmail.com";
+  sendTemplate(email);
   //var phone = event.phone.toLowerCase();
 //   var field_email_source = event.field_email_source;
 //   var field_email_source_form_input = event.field_email_source_form_input;
