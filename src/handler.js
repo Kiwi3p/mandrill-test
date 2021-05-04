@@ -157,7 +157,7 @@ function sendTemplate(email) {
 }
 
 // This will be the function called when our Lambda function is exectued
-exports.handler = (event, context, callback) => {
+exports.mandrillHandler = (event, context, callback) => {
   console.log("1.1 - ", event);
   //   var email = event.email.toLowerCase();
   var email = "johnktransue@gmail.com";

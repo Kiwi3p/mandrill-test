@@ -11,4 +11,4 @@ provider:
 
 functions:
   hello:
-    handler: src/handler.mandrillTest
+    handler: src/handler.mandrillHandler
