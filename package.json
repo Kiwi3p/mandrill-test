@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@mailchimp/mailchimp_transactional": "^1.0.25",
+    "aws-sdk": "^2.897.0",
+    "mailchimp-api-v3": "^1.15.0",
+    "mandrill-api": "^1.0.45",
+    "md5": "^2.3.0",
+    "throttled-request": "^0.1.1"
+  }
+}
