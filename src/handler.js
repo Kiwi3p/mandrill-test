@@ -78,6 +78,10 @@ function addToMCList(email) {
 
 // send user email welcome template
 function sendTemplate(email) {
+  var MANDRILL_API_KEY = process.env.MANDRILL_API_KEY,
+  MANDRILL_FROM_EMAIL = process.env.MANDRILL_FROM_EMAIL,
+  MANDRILL_FROM_NAME = process.env.MANDRILL_FROM_NAME,
+  MANDRILL_TEMPLATE_NAME = process.env.MANDRILL_TEMPLATE_NAME;
   console.log(
     "5.0 Mandrill sendTemplate - ",
     MANDRILL_API_KEY,
