@@ -102,10 +102,23 @@ function sendTemplate(email) {
 
 // This will be the function called when our Lambda function is exectued
 exports.mandrillHandler = (event, context, callback) => {
+  const requestId = context.awsRequestId;
   console.log("1.1 - ", event);
   //   var email = event.email.toLowerCase();
   var email = "johnktransue@gmail.com";
   sendTemplate(email);
+    // Handle promise fulfilled/rejected states
+    await createEmail(requestId, event).then(() => {
+      callback(null, {
+          statusCode: 201,
+          body: '',
+          headers: {
+              'Access-Control-Allow-Origin' : '*'
+          }
+      });
+  }).catch((err) => {
+      console.error(err)
+  })
   //var phone = event.phone.toLowerCase();
 //   var field_email_source = event.field_email_source;
 //   var field_email_source_form_input = event.field_email_source_form_input;
@@ -139,15 +152,15 @@ exports.mandrillHandler = (event, context, callback) => {
   // Insert the email into the database
   // Function createEmail
 // Writes message to DynamoDb table Message 
-function createEmail() {
+function createEmail(requestId, event) {
 
   const ddbPutParams = {
     TableName: 'PPSubscribers',
     Item: {
-      'email' : {S: eventEmail},
+      'messageId' : requestId,
+      'email' : 'johnktransue@gmail.com',
       'timestamp': {S: new Date().toISOString()} 
     },
-    ReturnValues: "ALL_OLD"
   };
   return ddb.put(params).promise();
 }
