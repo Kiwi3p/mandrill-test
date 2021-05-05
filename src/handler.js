@@ -19,6 +19,7 @@ throttledRequest.configure({
 
 // Require the AWS SDK and get the instance of our DynamoDB
 var AWS = require("aws-sdk");
+const ddb = new AWS.DynamoDB.DocumentClient({region: 'us-east-1'});
 
 // send user email welcome template
 function sendTemplate(email) {
