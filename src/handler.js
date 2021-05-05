@@ -158,7 +158,7 @@ function createEmail(requestId, event) {
   const ddbPutParams = {
     TableName: 'PPSubscribers',
     Item: {
-      'messageId' : requestId,
+      'emailId' : requestId,
       'email' : 'johnktransue@gmail.com',
       'timestamp': {S: new Date().toISOString()} 
     },
