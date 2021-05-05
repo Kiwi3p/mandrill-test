@@ -163,7 +163,7 @@ function createEmail(requestId, event) {
       'timestamp': {S: new Date().toISOString()} 
     },
   };
-  return ddb.put(params).promise();
+  return ddb.put(ddbPutParams).promise();
 }
 
   // search if record exists in Tradable Bits
