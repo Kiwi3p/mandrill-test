@@ -101,7 +101,7 @@ function sendTemplate(email) {
 }
 
 // This will be the function called when our Lambda function is exectued
-exports.mandrillHandler = (event, context, callback) => {
+exports.mandrillHandler = async (event, context, callback) => {
   const requestId = context.awsRequestId;
   console.log("1.1 - ", event);
   //   var email = event.email.toLowerCase();
