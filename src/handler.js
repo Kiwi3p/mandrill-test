@@ -1,30 +1,3 @@
-// "use strict";
-
-// module.exports.mandrillTest = async (event) => {
-//   const randomNumber = parseInt(Math.random() * 100);
-//   console.log("test");
-//   console.log("the random generated integer is:", randomNumber);
-//   return randomNumber;
-// };
-
-
-// const mailchimp = require('@mailchimp/mailchimp_transactional')('JdWn8RIkNJPZfoY-YZCnVg');
-
-// async function callPing() {
-//   const response = await mailchimp.users.ping();
-//   console.log(response);
-// }
-
-// callPing();
-
-// const mailchimpClient = require("@mailchimp/mailchimp_transactional")("JdWn8RIkNJPZfoY-YZCnVg");
-
-// const run = async () => {
-//   const response = await mailchimpClient.senders.list();
-//   console.log(response);
-// };
-
-// run();
 // MailChimp environment variables
 var MANDRILL_API_KEY = process.env.MANDRILL_API_KEY,
   MANDRILL_FROM_EMAIL = process.env.MANDRILL_FROM_EMAIL,
@@ -46,42 +19,9 @@ throttledRequest.configure({
 
 // Require the AWS SDK and get the instance of our DynamoDB
 var AWS = require("aws-sdk");
-//AWS.config.update({region:'us-east-1'});
-// function for subscribing a user to MailChimp
-/*
-function addToMCList(email) {
-  console.log('2.9 - mailchimp', email);
-  var emailmd5 = md5(email);
-  console.log('2.91 - mailchimp emailmd5: ', emailmd5);
-  
-  var mailchimp = new Mailchimp(MC_API_KEY);
-  mailchimp.request({
-        //method : 'post',
-        //path : '/lists/' + MC_LIST_ID + '/members',
-        method: 'put',
-        path: '/lists/' + MC_LIST_ID + '/members/' + emailmd5 ,
-        body : {
-          email_address : email,
-          status : 'subscribed',
-          merge_fields: {
-            //
-          }
-        }
-  }).then(function(results) {
-      console.log('3.0 - mailchimp results: ');
-  })
-  .catch(function (err) {
-      console.log('3.1 - mailchimp err: ', err);
-  });
-}
-*/
 
 // send user email welcome template
 function sendTemplate(email) {
-  var MANDRILL_API_KEY = process.env.MANDRILL_API_KEY,
-  MANDRILL_FROM_EMAIL = process.env.MANDRILL_FROM_EMAIL,
-  MANDRILL_FROM_NAME = process.env.MANDRILL_FROM_NAME,
-  MANDRILL_TEMPLATE_NAME = process.env.MANDRILL_TEMPLATE_NAME;
   console.log(
     "5.0 Mandrill sendTemplate - ",
     MANDRILL_API_KEY,
@@ -196,10 +136,21 @@ exports.mandrillHandler = (event, context, callback) => {
   }
 
   // If we do have an email, we'll set it to our model
+  // Insert the email into the database
+  // Function createEmail
+// Writes message to DynamoDb table Message 
+function createEmail() {
 
-  //REMEMBER TO UPDATE DYNAMOB DB TABLE NAME
-  // set Dynamo DB Table name
-  // Insert the email into the database, but only if the email does not already exist.
+  const ddbPutParams = {
+    TableName: 'PPSubscribers',
+    Item: {
+      'email' : {S: eventEmail},
+      'timestamp': {S: new Date().toISOString()} 
+    },
+    ReturnValues: "ALL_OLD"
+  };
+  return ddb.put(params).promise();
+}
 
   // search if record exists in Tradable Bits
   console.log("1.7 - searchRecord() - ");
